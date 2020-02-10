@@ -18,7 +18,7 @@ Coches Disponibles
     @foreach($tipos as $tipo)
       @if($tipo==$request->tipo)
         <option selected>{{$tipo}}</option>
-      
+
       @else
         <option >{{$tipo}}</option>
       @endif
@@ -36,7 +36,7 @@ Coches Disponibles
       @endforeach
     </select>
 
-  
+
   <input type="submit" value="Buscar" class="btn btn-info ml-2">
 
 </form>
@@ -49,7 +49,7 @@ Coches Disponibles
         <th scope="col">Marca</th>
         <th scope="col">Modelo</th>
         <th scope="col">Tipo</th>
-        
+
         <th scope="col">Kilometros</th>
         <th scope="col text-center">Foto</th>
         <th scope="col">Acciones</th>
@@ -65,11 +65,11 @@ Coches Disponibles
     <td class="align-middle">{{$coche->marca->nombre}}</td>
     <td class="align-middle">{{$coche->modelo}}</td>
     <td class="align-middle">{{$coche->tipo}}</td>
-    
+
     <td class="align-middle">{{$coche->klms}}</td>
     <td>
         <img src="{{asset($coche->foto)}}" width="90px" height='90px' class="rounded-circle">
-        </td>
+    </td>
     <td class="align-middle" style="white-space: nowrap">
     <form name="borrar" method='post' action='{{route('coches.destroy', $coche)}}'>
       @csrf

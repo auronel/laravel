@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Marca;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MarcaController extends Controller
 {
@@ -14,7 +15,8 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        //
+        $marcas = Marca::orderBy('nombre')->paginate(3);
+        return view('marcas.index', compact('marcas'));
     }
 
     /**
@@ -24,7 +26,8 @@ class MarcaController extends Controller
      */
     public function create()
     {
-        //
+        $marcas = Marca::orderBy('nombre')->get();
+        return view('marcas.create', compact('marcas'));
     }
 
     /**
@@ -35,7 +38,19 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->has('logo')) {
+            $request->validate([
+                'logo' => ['image']
+            ]);
+            $file = $request->file('logo');
+            $nombre = 'marcas/' . time() . '_' . $file->getClientOriginalName();
+            Storage::disk('public')->put($nombre, \File::get($file));
+            $coche = Marca::create($request->all());
+            $coche->update(['logo' => "img/$nombre"]);
+        } else {
+            Marca::create($request->all());
+        }
+        return redirect()->route('marcas.index')->with("mensaje", "Marca guardada");
     }
 
     /**
@@ -46,7 +61,7 @@ class MarcaController extends Controller
      */
     public function show(Marca $marca)
     {
-        //
+        return view('marcas.detalle', compact('marca'));
     }
 
     /**
@@ -57,7 +72,8 @@ class MarcaController extends Controller
      */
     public function edit(Marca $marca)
     {
-        //
+        $marcas = Marca::orderBy('nombre')->get();
+        return view('marcas.edit', compact('marcas', 'marca'));
     }
 
     /**
@@ -69,7 +85,22 @@ class MarcaController extends Controller
      */
     public function update(Request $request, Marca $marca)
     {
-        //
+        if ($request->has('logo')) {
+            $request->validate([
+                'logo' => ['image']
+            ]);
+            $file = $request->file('logo');
+            $nombre = 'marcas/' . time() . '_' . $file->getClientOriginalName();
+            Storage::disk('public')->put($nombre, \File::get($file));
+            if (basename($marca->logo) != 'default.jpg') {
+                unlink($marca->logo);
+            }
+            $marca->update($request->all());
+            $marca->update(['logo' => "img/$nombre"]);
+        } else {
+            $marca->update($request->all());
+        }
+        return redirect()->route('marcas.index')->with("mensaje", "Marca modificada");
     }
 
     /**
@@ -80,6 +111,12 @@ class MarcaController extends Controller
      */
     public function destroy(Marca $marca)
     {
-        //
+        $logo = $marca->logo;
+        if (basename($logo) != "default.jpg") {
+            unlink($logo);
+        }
+
+        $marca->delete();
+        return redirect()->route('marcas.index')->with('mensaje', "Marca eliminada");
     }
 }
