@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Alumno;
+use App\Modulo;
 use Illuminate\Http\Request;
 
 class AlumnoController extends Controller
@@ -14,7 +15,8 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        //
+        $alumnos=Alumno::orderBy('apellidos')->paginate(4);
+        return view('alumnos.index', compact('alumnos'));
     }
 
     /**
@@ -46,8 +48,21 @@ class AlumnoController extends Controller
      */
     public function show(Alumno $alumno)
     {
-        //
+        return view('alumnos.detalle',compact('alumno'));
     }
+
+    public function fmatricula(Alumno $alumno){
+        //Esto me devuelve los id de los modulos que tiene $alumno
+        $modulos1=$alumno->modulos()->pluck('modulos_id');
+        //Esto me devuelve los modulos que le faltan al alumno
+        $modulos2=Modulo::whereNotIn('id',$modulos1)->get();
+        //Compruebo si ya los tiene todos
+        if($modulos2->count()==0){
+            return redirect()->route('alumnos.show',$alumno)->with('mensaje','Este alumno ya está matriculado en todos los modulos');
+        }
+        //Cargamos el formulario matricular alumno le mando el alumno y los modulos que le faltan
+        return view('alumnos.fmatricula',compact('alumno','modulos2'));
+    }   
 
     /**
      * Show the form for editing the specified resource.
