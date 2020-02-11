@@ -14,8 +14,8 @@ class ArticuloController extends Controller
      */
     public function index()
     {
-        $articulos = Articulo::orderBy('nombre')->paginate(4);
-        return view('index', compact('articulos'));
+        $articulos = Articulo::orderBy('id')->paginate(3);
+        return view('articulos.index', compact('articulos'));
     }
 
     /**
@@ -25,7 +25,7 @@ class ArticuloController extends Controller
      */
     public function create()
     {
-        //
+        return view('articulos.create');
     }
 
     /**
@@ -81,6 +81,11 @@ class ArticuloController extends Controller
      */
     public function destroy(Articulo $articulo)
     {
-        //
+        $imagen = $articulo->imagen;
+        if (basename($imagen) != "default.jpg") {
+            unlink($imagen);
+        }
+        $articulo->delete();
+        return redirect()->route('articulos.index')->with('mensaje', "Artículo Eliminado");
     }
 }
