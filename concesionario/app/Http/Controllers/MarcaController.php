@@ -38,6 +38,10 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre' => ['required', 'unique:marcas,nombre'],
+        ]);
+
         if ($request->has('logo')) {
             $request->validate([
                 'logo' => ['image']
@@ -85,6 +89,10 @@ class MarcaController extends Controller
      */
     public function update(Request $request, Marca $marca)
     {
+        $request->validate([
+            'nombre' => ['required', 'unique:marcas,nombre,' . $marca->id]
+        ]);
+
         if ($request->has('logo')) {
             $request->validate([
                 'logo' => ['image']
