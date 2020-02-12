@@ -52,10 +52,7 @@ class AlumnoController extends Controller
     }
 
     public function fmatricula(Alumno $alumno){
-        //Esto me devuelve los id de los modulos que tiene $alumno
-        $modulos1=$alumno->modulos()->pluck('modulos_id');
-        //Esto me devuelve los modulos que le faltan al alumno
-        $modulos2=Modulo::whereNotIn('id',$modulos1)->get();
+        $modulos2=$alumno->modulosOut();
         //Compruebo si ya los tiene todos
         if($modulos2->count()==0){
             return redirect()->route('alumnos.show',$alumno)->with('mensaje','Este alumno ya está matriculado en todos los modulos');
@@ -63,6 +60,31 @@ class AlumnoController extends Controller
         //Cargamos el formulario matricular alumno le mando el alumno y los modulos que le faltan
         return view('alumnos.fmatricula',compact('alumno','modulos2'));
     }   
+
+    public function matricular(Request $request){
+        $id=$request->alumno_id;
+        //Me traigo el alumno de codigo id
+        $alumno=Alumno::find($id);
+        if(isset($request->modulo_id)){
+            foreach($request->modulo_id as $item){
+                $alumno->modulos()->attach($item);
+            }
+            return redirect()->route('alumnos.show',$alumno)->with('mensaje','Alumno matriculado con éxito');
+        }
+        return redirect()->route('alumnos.show',$alumno)->with('mensaje','Ningun modulo seleccionado');
+    }
+
+    public function fcalificar(Alumno $alumno){
+        $modulos=$alumno->modulos()->get();
+        if($modulos->count()==0){
+            return redirect()->route('alumnos.show',$alumno)->with('mensaje','El alumno no cursa ningun módulo');
+        }
+        return view('alumnos.fcalificar',compact('alumno'));
+    }
+
+    public function calificar(Request $request){
+        
+    }
 
     /**
      * Show the form for editing the specified resource.
