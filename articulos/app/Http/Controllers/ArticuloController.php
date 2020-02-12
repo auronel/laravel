@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Articulo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ArticuloController extends Controller
 {
@@ -14,14 +15,8 @@ class ArticuloController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
-        // $articulos = Articulo::orderBy('nombre')->paginate(4);
-        $articulos=[1,2,3,4];
-        return view('listado', compact('articulos'));
-=======
         $articulos = Articulo::orderBy('id')->paginate(3);
         return view('articulos.index', compact('articulos'));
->>>>>>> 3957a5452897b501fd83be4c2925adc7b015197a
     }
 
     /**
@@ -53,7 +48,6 @@ class ArticuloController extends Controller
      */
     public function show(Articulo $articulo)
     {
-        return view('articulos.show');
     }
 
     /**
@@ -64,7 +58,9 @@ class ArticuloController extends Controller
      */
     public function edit(Articulo $articulo)
     {
-        //
+        $tipos = ['Bazar', 'Electrónica', 'Hogar'];
+        $articulos = Articulo::orderBy('id')->get();
+        return view('articulos.edit', compact('articulos', 'articulo', 'tipos'));
     }
 
     /**
@@ -76,7 +72,25 @@ class ArticuloController extends Controller
      */
     public function update(Request $request, Articulo $articulo)
     {
-        //
+        if ($request->has('imagen')) {
+            $request->validate([
+                'imagen' => ['image']
+            ]);
+
+            $file = $request->file('imagen');
+            $nombre = 'articulos/' . time() . '_' . $file->getClientOriginalName();
+            Storage::disk('public')->put($nombre, \File::get($file));
+
+            if (basename($articulo->imagen) != 'default.jpg') {
+                unlink($articulo->imagen);
+            }
+
+            $articulo->update($request->all());
+            $articulo->update(['imagen' => "img/$nombre"]);
+        } else {
+            $articulo->update($request->all());
+        }
+        return redirect()->route('articulos.index')->with("mensaje", "Artículo modificado");
     }
 
     /**

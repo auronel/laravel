@@ -8,7 +8,7 @@
     <link rel="stylesheet" href='{{asset('css/font-awesome/css/font-awesome.min.css')}}' >
     <title>@yield('titulo')</title>
 </head>
-<body>
+<body style="background: lightseagreen">
     <h3 class="text-center mt-3">@yield('cabecera')</h3>
     <div class="container mt-3">
         @yield('contenido')
