@@ -29,6 +29,7 @@
             </p>
             <a href="{{route('alumnos.index')}}" class="float-right mt-3 btn btn-success">Volver</a>
             <a href="{{route('alumnos.fmatricula',$alumno)}}" class="float-right btn btn-warning mr-2 mt-3">Matricular alumno</a>
+            <a href="{{route('alumnos.fcalificar',$alumno)}}" class="float-right btn btn-danger mr-2 mt-3">Calificar alumno</a>
         </div>
     </div>
 @endsection

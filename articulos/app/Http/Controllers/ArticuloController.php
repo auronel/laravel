@@ -14,8 +14,9 @@ class ArticuloController extends Controller
      */
     public function index()
     {
-        $articulos = Articulo::orderBy('nombre')->paginate(4);
-        return view('index', compact('articulos'));
+        // $articulos = Articulo::orderBy('nombre')->paginate(4);
+        $articulos=[1,2,3,4];
+        return view('listado', compact('articulos'));
     }
 
     /**

@@ -24,12 +24,12 @@
             <tbody>
                 @foreach ($articulos as $articulo)
                 <tr>
-                    <th scope="row">1</th>
-                    <td>{{$articulo->nombre}}</td>
-                    <td>{{$articulo->categoria}}</td>
+                    <th scope="row">#</th>
+                    <td>{{$articulo}}</td>
+                    {{-- <td>{{$articulo->categoria}}</td>
                     <td>{{$articulo->precio}}</td>
                     <td>{{$articulo->stock}}</td>
-                    <td>{{$articulo->imagen}}</td>
+                    <td>{{$articulo->imagen}}</td> --}}
                 </tr>
                 @endforeach
             </tbody>
