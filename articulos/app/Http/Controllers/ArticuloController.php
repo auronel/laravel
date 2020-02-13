@@ -52,8 +52,8 @@ class ArticuloController extends Controller
             $file = $request->file('imagen');
             $nombre = 'articulos/' . time() . '_' . $file->getClientOriginalName();
             Storage::disk('public')->put($nombre, \File::get($file));
-            $coche = Articulo::create($request->all());
-            $coche->update(['imagen' => "img/$nombre"]);
+            $articulo = Articulo::create($request->all());
+            $articulo->update(['imagen' => "img/$nombre"]);
         } else {
             Articulo::create($request->all());
         }
