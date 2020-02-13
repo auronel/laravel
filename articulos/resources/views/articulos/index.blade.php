@@ -14,15 +14,19 @@
         <select name='categoria' class="form-control" onchange="this.form.submit()">
             <option value="%">Todos</option>
             @foreach($tipos as $tipo)
-                <option>{{$tipo}}</option>
+                @if($tipo==$request->categoria)
+                    <option selected>{{$tipo}}</option>
+                @else
+                    <option>{{$tipo}}</option>
+                @endif
             @endforeach
         </select>
 
-        <select name='precio' class="form-control" onchange="this.form.submit()">
-            <option value="%">Todos</option>
-            @foreach($precios as $precio)
-                <option >{{$precio}}</option>
-            @endforeach
+        <select name='precio' class="form-control ml-2" onchange="this.form.submit()">
+            <option value="%" selected>Todos</option>
+            <option value="1">Menos de 50 €</option>
+            <option value="2">50 - 200 €</option>
+            <option value="3">Más de 200 €</option>
         </select>
     </form>
     <table class="table table-striped table-dark text-center">
