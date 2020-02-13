@@ -16,6 +16,12 @@ class ArticuloController extends Controller
     public function index(Request $request)
     {
         $tipos = ['Bazar', 'Electrónica', 'Hogar'];
+        $precios = [
+            '%' => 'Todos',
+            '1' => 'Menos de 50 €',
+            '2' => '50 € - 200 €',
+            '3' => 'Más de 200 €'
+        ];
         $misCategorias = $request->get('categoria');
         $misPrecios = $request->get('precio');
         $articulos = Articulo::orderBy('id')
@@ -23,7 +29,7 @@ class ArticuloController extends Controller
             ->precio($misPrecios)
             ->paginate(3);
 
-        return view('articulos.index', compact('articulos', 'tipos', 'request'));
+        return view('articulos.index', compact('articulos', 'tipos', 'request', 'precios'));
     }
 
     /**
