@@ -22,12 +22,40 @@
             @endforeach
         </select>
 
-        <select name='precio' class="form-control ml-2" onchange="this.form.submit()">
+        <select name="precio" class="form-control ml-2" onchange="this.form.submit()">
+            @if(!$request->get('precio'))
+                <option value="%" selected>Todos</option>
+                <option value="1">Menos de 50 €</option>
+                <option value="2">50 - 200 €</option>
+                <option value="3">Más de 200 €</option>
+                @else
+                @if($request->get('precio')==1)
+                    <option value="%">Todos</option>
+                    <option value="1" selected>Menos de 50 €</option>
+                    <option value="2">50 - 200 €</option>
+                    <option value="3">Más de 200 €</option>
+                @endif
+                @if($request->get('precio')==2)
+                    <option value="%">Todos</option>
+                    <option value="1">Menos de 50 €</option>
+                    <option value="2" selected>50 - 200 €</option>
+                    <option value="3">Más de 200 €</option>
+                @endif
+
+                @if($request->get('precio')==3)
+                    <option value="%">Todos</option>
+                    <option value="1">Menos de 50 €</option>
+                    <option value="2">50 - 200 €</option>
+                    <option value="3" selected>Más de 200 €</option>
+                @endif
+            @endif
+        </select>
+        {{-- <select name='precio' class="form-control ml-2" onchange="this.form.submit()">
             <option value="%" selected>Todos</option>
             <option value="1">Menos de 50 €</option>
             <option value="2">50 - 200 €</option>
             <option value="3">Más de 200 €</option>
-        </select>
+        </select> --}}
     </form>
     <table class="table table-striped table-dark text-center">
         <thead>
