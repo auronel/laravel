@@ -58,7 +58,6 @@ Marcas Disponibles
                 @endforeach
             </tbody>
         </table>
-        {{$marcas->links()}}
-        {{-- {{$marcas->appends(Request::except('page'))->links()}} --}}
+        {{$marcas->appends(Request::except('page'))->links()}}
     </div>
   @endsection

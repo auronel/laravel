@@ -13,10 +13,12 @@ class ArticuloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $tipos = ['Bazar', 'Electrónica', 'Hogar'];
+        $misCategorias=$request->get('categoria');
         $articulos = Articulo::orderBy('id')->paginate(3);
-        return view('articulos.index', compact('articulos'));
+        return view('articulos.index', compact('articulos','tipos'));
     }
 
     /**
@@ -26,7 +28,8 @@ class ArticuloController extends Controller
      */
     public function create()
     {
-        return view('articulos.create');
+        $tipos = ['Bazar', 'Electrónica', 'Hogar'];
+        return view('articulos.create', compact('tipos'));
     }
 
     /**
@@ -37,7 +40,19 @@ class ArticuloController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->has('imagen')) {
+            $request->validate([
+                'imagen' => ['image']
+            ]);
+            $file = $request->file('imagen');
+            $nombre = 'articulos/' . time() . '_' . $file->getClientOriginalName();
+            Storage::disk('public')->put($nombre, \File::get($file));
+            $coche = Articulo::create($request->all());
+            $coche->update(['imagen' => "img/$nombre"]);
+        } else {
+            Articulo::create($request->all());
+        }
+        return redirect()->route('articulos.index')->with("mensaje", "Articulo añadido");
     }
 
     /**

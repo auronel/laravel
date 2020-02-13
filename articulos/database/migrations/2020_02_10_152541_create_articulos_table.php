@@ -17,7 +17,7 @@ class CreateArticulosTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre', 60);
             $table->string('categoria', 30);
-            $table->float('precio');
+            $table->float('precio',6,2);
             $table->integer('stock');
             $table->string('imagen')->default('img/articulos/default.jpg');
             $table->timestamps();
