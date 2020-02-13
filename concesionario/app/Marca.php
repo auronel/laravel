@@ -12,4 +12,16 @@ class Marca extends Model
     public function coches(){
         return $this->hasMany(Coche::class);
     }
+
+    public function scopePais($query,$v)
+    {
+        if(!isset($v)){
+            return $query->where('pais','like','%');
+        }
+
+        if($v=='%'){
+            return $query->where('pais','like',$v);
+        }
+        return $query->where('pais',$v);
+    }
 }

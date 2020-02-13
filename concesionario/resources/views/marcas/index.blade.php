@@ -11,6 +11,19 @@ Marcas Disponibles
     @endif
     <div class="container">
         <a href="{{route('marcas.create')}}" class="btn btn-success mb-3">Guardar marca</a>
+        <form name="search" method="get" action="{{route('marcas.index')}}" class="form-inline float-right">
+            <i class="fa fa-search fa-2x ml-2 mr-2" aria-hidden="true"></i>
+            <select name='pais' class='form-control mr-2' onchange="this.form.submit()">
+                <option value='%'>Todos</option>
+                    @foreach($paises as $pais)
+                        @if($pais==$request->pais)
+                            <option selected>{{$pais}}</option>
+                        @else
+                            <option >{{$pais}}</option>
+                        @endif
+                    @endforeach
+            </select>     
+        </form>
         <table class="table table-striped table-dark mt-3">
             <thead>
                 <tr class="text-center">

@@ -13,10 +13,14 @@ class MarcaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $marcas = Marca::orderBy('nombre')->paginate(3);
-        return view('marcas.index', compact('marcas'));
+        $paises=['España','Francia','Alemania','Italia','USA','Japon'];
+        $misPaises=$request->get('pais');
+        $marcas = Marca::orderBy('nombre')
+        ->pais($misPaises)
+        ->paginate(3);
+        return view('marcas.index', compact('marcas','paises','request'));
     }
 
     /**
