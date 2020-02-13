@@ -10,6 +10,21 @@
         <p class="alert alert-warning my-3">{{$texto}}</p>
     @endif
     <a href="{{route('articulos.create')}}" class="btn btn-success mb-3">Añadir artículo</a>
+    <form name="search" action="{{route('articulos.index')}}" method="get" class="form-inline float-right">
+        <select name='categoria' class="form-control" onchange="this.form.submit()">
+            <option value="%">Todos</option>
+            @foreach($tipos as $tipo)
+                <option>{{$tipo}}</option>
+            @endforeach
+        </select>
+
+        <select name='precio' class="form-control" onchange="this.form.submit()">
+            <option value="%">Todos</option>
+            @foreach($precios as $precio)
+                <option >{{$precio}}</option>
+            @endforeach
+        </select>
+    </form>
     <table class="table table-striped table-dark text-center">
         <thead>
             <tr>
@@ -43,5 +58,5 @@
                 @endforeach
         </tbody>
       </table>
-      {{$articulos->links()}}
+      {{$articulos->appends(Request::except('page'))->links()}}
 @endsection

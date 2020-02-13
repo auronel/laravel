@@ -17,8 +17,11 @@ class ArticuloController extends Controller
     {
         $tipos = ['Bazar', 'Electrónica', 'Hogar'];
         $misCategorias=$request->get('categoria');
-        $articulos = Articulo::orderBy('id')->paginate(3);
-        return view('articulos.index', compact('articulos','tipos'));
+        $precios=$request->get('precio');
+        $articulos = Articulo::orderBy('id')
+        ->categoria($misCategorias)
+        ->paginate(3);
+        return view('articulos.index', compact('articulos','tipos','precios','request'));
     }
 
     /**
