@@ -3,11 +3,12 @@
     Academia s.a.
 @endsection
 @section('cabecera')
-    Calificación de: {{$alumno->nombre.' '.$alumno->apellido}}
+    Calificación de: {{$alumno->nombre.' '.$alumno->apellidos}}
 @endsection
 @section('contenido')
     <form name="cal" method="POST" action="{{route('alumnos.calificar')}}">
         @csrf
+        <input type="hidden" name="id_al" value="{{$alumno->id}}">
         @foreach ($alumno->modulos as $modulo)
             <div class="form-group row">
                 <label for="{{$modulo->id}}" class="col-sm-1 col-form-label text-primary text-weight-bold">{{$modulo->nombre}}</label>

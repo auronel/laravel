@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Alumno;
 use App\Modulo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AlumnoController extends Controller
 {
@@ -26,7 +27,7 @@ class AlumnoController extends Controller
      */
     public function create()
     {
-        //
+        return view('alumnos.create');
     }
 
     /**
@@ -37,7 +38,32 @@ class AlumnoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Validaciones genericas
+        $request->validate([
+            'nombre'=>['required'],
+            'apellidos'=>['required'],
+            'mail'=>['required','unique:alumnos,mail','email:rfc,dns']            
+        ]);
+        //cojo los datos por que voy a modificar el request, voy a poner nom y ape la primera letra en mayuscula
+        $alumno=new Alumno();
+        $alumno->nombre=ucwords($request->nombre);
+        $alumno->apellidos=ucwords($request->apellidos);
+        $alumno->mail=$request->mail;
+        //comprobamos si hemos subido un logo
+        if($request->has('logo')){
+            $request->validate([
+                'logo'=>['image']
+            ]);
+            $file=$request->file('logo');
+            $nom='logo/'.time().'_'.$file->getClientOriginalName();
+            //guardamos el fichero en public
+            Storage::disk('public')->put($nom,\File::get($file));
+            //le damos a alumno el nombre que le hemos puesto al fichero
+            $alumno->logo="img/$nom";  
+            //guardamos el alumno          
+        }
+        $alumno->save();
+        return redirect()->route('alumnos.index')->with('mensaje','Alumno guardado');
     }
 
     /**
@@ -83,7 +109,12 @@ class AlumnoController extends Controller
     }
 
     public function calificar(Request $request){
-        
+        $alumno=Alumno::find($request->id_al);
+        //recorro el array asociativo con los id modulos y las notas
+        foreach ($request->modulos as $k => $v) {
+            $alumno->modulos()->updateExistingPivot($k, ['nota'=>$v]);
+        }
+        return redirect()->route('alumnos.show',$alumno)->with('mensaje','Calificaciones guardadas');
     }
 
     /**
