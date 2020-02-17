@@ -26,6 +26,7 @@
                         @endforeach
                     </ul>                
                 </p>
+                <p>Nota media: {{$alumno->notaMedia()}}</p>
             </p>
             <a href="{{route('alumnos.index')}}" class="float-right mt-3 btn btn-success">Volver</a>
             <a href="{{route('alumnos.fmatricula',$alumno)}}" class="float-right btn btn-warning mr-2 mt-3">Matricular alumno</a>
