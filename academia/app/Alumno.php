@@ -24,13 +24,18 @@ class Alumno extends Model
 
     public function notaMedia(){
         $suma = 0;
-        $total=$this->modulos->count();
+        $total = $this->modulos()->count();
+        $cont = 0;
+        
         if($total>0){
             foreach($this->modulos as $modulo){
                 $nota = $modulo->pivot->nota;
-                $suma+=$nota;
+                if ($nota!=null) {
+                    $suma+=$nota;
+                    $cont++;
+                }                
             }
-            return round(($suma/$total),2);
+            return round(($suma/$cont),2);
         }
         return "Sin modulos";
     }

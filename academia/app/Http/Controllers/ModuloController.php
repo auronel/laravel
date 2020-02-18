@@ -14,7 +14,8 @@ class ModuloController extends Controller
      */
     public function index()
     {
-        //
+        $modulos=Modulo::orderBy('id')->paginate(4);
+        return view('modulos.index',compact('modulos'));
     }
 
     /**
@@ -24,7 +25,7 @@ class ModuloController extends Controller
      */
     public function create()
     {
-        //
+        return view('modulos.create');
     }
 
     /**
@@ -35,7 +36,11 @@ class ModuloController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $modulo=new Modulo();
+        $modulo->nombre=$request->nombre;
+        $modulo->horas=$request->horas;
+        $modulo->save();
+        return redirect()->route('modulos.index')->with('mensaje','Modulo guardado');
     }
 
     /**
@@ -46,7 +51,7 @@ class ModuloController extends Controller
      */
     public function show(Modulo $modulo)
     {
-        //
+        return view('modulos.detalle',compact('modulo'));
     }
 
     /**
@@ -57,7 +62,7 @@ class ModuloController extends Controller
      */
     public function edit(Modulo $modulo)
     {
-        //
+        return view('modulos.edit',compact('modulo'));
     }
 
     /**
@@ -69,7 +74,10 @@ class ModuloController extends Controller
      */
     public function update(Request $request, Modulo $modulo)
     {
-        //
+        $modulo->nombre=$request->nombre;
+        $modulo->horas=$request->horas;
+        $modulo->update();
+        return redirect()->route('modulos.index')->with('mensaje','Modulo actualizado');
     }
 
     /**
@@ -80,6 +88,7 @@ class ModuloController extends Controller
      */
     public function destroy(Modulo $modulo)
     {
-        //
+        $modulo->delete();
+        return redirect()->route('modulos.index')->with('mensaje','Modulo borrado');
     }
 }
