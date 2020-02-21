@@ -19,7 +19,7 @@ Crear Coche
     @csrf
     <div class="form-row">
       <div class="col">
-        <input type="text" class="form-control" placeholder="Matricula" name='matricula' required>
+        <input type="text" class="form-control" value="{{old('matricula')}}" placeholder="Matricula" name='matricula' required>
       </div>
       <div class="col">
         <select name='marca_id' class="form-control">

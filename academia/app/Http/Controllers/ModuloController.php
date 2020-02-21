@@ -36,10 +36,7 @@ class ModuloController extends Controller
      */
     public function store(Request $request)
     {
-        $modulo=new Modulo();
-        $modulo->nombre=$request->nombre;
-        $modulo->horas=$request->horas;
-        $modulo->save();
+        Modulo::create($request->all());
         return redirect()->route('modulos.index')->with('mensaje','Modulo guardado');
     }
 
@@ -74,9 +71,7 @@ class ModuloController extends Controller
      */
     public function update(Request $request, Modulo $modulo)
     {
-        $modulo->nombre=$request->nombre;
-        $modulo->horas=$request->horas;
-        $modulo->update();
+        $modulo->update($request->all());
         return redirect()->route('modulos.index')->with('mensaje','Modulo actualizado');
     }
 
