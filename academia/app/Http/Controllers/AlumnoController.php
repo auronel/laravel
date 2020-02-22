@@ -47,7 +47,6 @@ class AlumnoController extends Controller
         $alumno->nombre = ucwords($datos['nombre']);
         $alumno->apellidos = ucwords($datos['apellidos']);
         $alumno->mail = $datos['mail'];
-        $alumno->logo = $datos['logo'];
 
         //comprobamos si hemos subido un logo
         if ($datos['logo'] != null) {
