@@ -10,6 +10,13 @@
         <p class="alert alert-danger my-3">{{$text}}</p>
     @endif
     <a href="{{route('alumnos.create')}}" class="btn btn-info my-3"><i class="fa fa-plus"></i> Crear alumno</a>
+    <form name="modulos" action="{{route('alumnos.index')}}" method="get" class="form-inline float-right">
+        <select name='categoria' class="form-control" onchange="this.form.submit()">
+            @foreach ($modulos as $modulo)
+                <option>{{$modulo->nombre}}</option>
+            @endforeach
+        </select>
+    </form>
     <table class="table table-striped table-dark">
         <thead>
         <tr>
