@@ -49,7 +49,7 @@ class AlumnoController extends Controller
         $alumno->mail = $datos['mail'];
 
         //comprobamos si hemos subido un logo
-        if ($datos['logo'] != null) {
+        if (isset($datos['logo']) && $datos['logo'] != null) {
             $file = $datos['logo'];
             $nom = 'logo/' . time() . '_' . $file->getClientOriginalName();
             //guardamos el fichero en public
