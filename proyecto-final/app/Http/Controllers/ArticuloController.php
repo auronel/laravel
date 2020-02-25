@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Articulo;
+use App\Http\Requests\CreateUpdateRequest;
 use Illuminate\Http\Request;
 
 class ArticuloController extends Controller
@@ -14,7 +15,8 @@ class ArticuloController extends Controller
      */
     public function index()
     {
-        //
+        $articulos = Articulo::orderBy('id')->paginate(3);
+        return view('articulos.index', compact('articulos'));
     }
 
     /**
@@ -24,7 +26,7 @@ class ArticuloController extends Controller
      */
     public function create()
     {
-        //
+        return view('articulos.create');
     }
 
     /**
@@ -33,9 +35,24 @@ class ArticuloController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateUpdateRequest $request)
     {
-        //
+        $datos = $request->validated();
+        $articulo = new Articulo();
+        $articulo->nombre = $datos['nombre'];
+        $articulo->modelo = $datos['modelo'];
+        $articulo->precio = $datos['precio'];
+        $articulo->stock = $datos['stock'];
+        $articulo->detalles = $datos['detalles'];
+
+        if (isset($datos['foto']) && $datos['foto'] != null) {
+            $file = $datos['foto'];
+            $nom = 'articulos/' . time() . '_' . $file->getClientOriginalName();
+            \Storage::disk('public')->put($nom, \File::get($file));
+            $articulo->foto = "img/$nom";
+        }
+        $articulo->save();
+        return redirect()->route('articulos.index')->with('mensaje', 'Producto añadido con éxito');
     }
 
     /**
@@ -46,7 +63,7 @@ class ArticuloController extends Controller
      */
     public function show(Articulo $articulo)
     {
-        //
+        return view('articulos.detalles', compact('articulo'));
     }
 
     /**
@@ -57,7 +74,7 @@ class ArticuloController extends Controller
      */
     public function edit(Articulo $articulo)
     {
-        //
+        return view('articulos.edit', compact('articulo'));
     }
 
     /**
@@ -67,9 +84,23 @@ class ArticuloController extends Controller
      * @param  \App\Articulo  $articulo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Articulo $articulo)
+    public function update(CreateUpdateRequest $request, Articulo $articulo)
     {
-        //
+        $datos = $request->validated();
+        $articulo->nombre = $datos['nombre'];
+        $articulo->modelo = $datos['modelo'];
+        $articulo->precio = $datos['precio'];
+        $articulo->stock = $datos['stock'];
+        $articulo->detalles = $datos['detalles'];
+
+        if (isset($datos['foto']) && $datos['foto'] != 'default.png') {
+            $file = $datos['foto'];
+            $nom = 'articulos/' . time() . '_' . $file->getClientOriginalName();
+            \Storage::disk('public')->put($nom, \File::get($file));
+            $articulo->foto = "img/$nom";
+        }
+        $articulo->update();
+        return redirect()->route('articulos.index')->with('mensaje', 'Producto actualizado con éxito');
     }
 
     /**
@@ -80,6 +111,11 @@ class ArticuloController extends Controller
      */
     public function destroy(Articulo $articulo)
     {
-        //
+        $foto = $articulo->foto;
+        if (basename($foto) != 'default.png') {
+            unlink($foto);
+        }
+        $articulo->delete();
+        return redirect()->route('articulos.index')->with('mensaje', 'Producto eliminado con éxito');
     }
 }
