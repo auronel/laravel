@@ -14,7 +14,8 @@ class VendedorController extends Controller
      */
     public function index()
     {
-        //
+        $vendedores = Vendedor::orderBy('id')->paginate(3);
+        return view('vendedores.index', compact('vendedores'));
     }
 
     /**

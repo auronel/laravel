@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Articulo;
-use App\Http\Requests\CreateUpdateRequest;
+use App\Http\Requests\ArticuloRequest;
 use Illuminate\Http\Request;
 
 class ArticuloController extends Controller
@@ -35,7 +35,7 @@ class ArticuloController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateUpdateRequest $request)
+    public function store(ArticuloRequest $request)
     {
         $datos = $request->validated();
         $articulo = new Articulo();

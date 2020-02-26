@@ -18,7 +18,7 @@
     @if ($text=Session::get('mensaje'))
         <p class="alert alert-success my-1">{{$text}}</p>
     @endif
-    <a href="{{route('articulos.create')}}" class="btn btn-success ml-4 my-2">Añadir producto</a>
+    <a href="{{route('articulos.create')}}" class="btn btn-success ml-4 my-1"> <i class="far fa-plus-square fa-1x"></i></a>
     <table class="table table-borderless mt-5">
         <thead>
         <tr>
@@ -34,18 +34,18 @@
         <tbody>
             @foreach ($articulos as $articulo)
                 <tr>
-                    <td class="text-center"><a href="{{route('articulos.show',$articulo)}}" class="text-white btn btn-info">Detalles</a></td>
-                    <td class="text-center">{{$articulo->nombre}}</td>
-                    <td class="text-center">{{$articulo->modelo}}</td>
-                    <td class="text-center">{{$articulo->precio}}</td>
-                    <td class="text-center">{{$articulo->stock}}</td>
-                    <td class="text-center"><img src="{{asset($articulo->foto)}}" width="90vw" height="90vh" class="img-fluid rounded-circle"></td>
-                    <td class="text-center">
+                    <td class="text-center align-middle"><a href="{{route('articulos.show',$articulo)}}" class="text-white btn btn-secondary"><i class="far fa-eye fa-1x"></i></a></td>
+                    <td class="text-center align-middle">{{$articulo->nombre}}</td>
+                    <td class="text-center align-middle">{{$articulo->modelo}}</td>
+                    <td class="text-center align-middle">{{$articulo->precio}}</td>
+                    <td class="text-center align-middle">{{$articulo->stock}}</td>
+                    <td class="text-center align-middle"><img src="{{asset($articulo->foto)}}" width="90vw" height="90vh" class="img-fluid rounded-circle"></td>
+                    <td class="text-center align-middle">
                         <form name="delete" action="{{route('articulos.destroy',$articulo)}}" method="post">
                             @csrf
                             @method('DELETE')
-                            <input type="submit" onclick="return confirm('¿Desea eliminar el producto?')" value="Eliminar" class="btn btn-danger">
-                            <a href="{{route('articulos.edit',$articulo)}}" class="btn btn-warning">Editar</a>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Desea eliminar el producto?')"><i class="fas fa-trash-alt fa-1x"></i></button>
+                            <a href="{{route('articulos.edit',$articulo)}}" class="btn btn-warning"><i class="far fa-edit fa-1x"></i></a>
                         </form>
                     </td>
                 </tr>
@@ -53,4 +53,7 @@
         </tbody>
     </table>
     {{$articulos->links()}}
+    <div class="text-center my-2">
+        <a href="{{route('inicio')}}"><i class="btn fas fa-home fa-2x"></i></a>
+    </div>
 @endsection

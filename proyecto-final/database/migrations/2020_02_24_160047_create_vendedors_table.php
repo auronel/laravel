@@ -15,6 +15,12 @@ class CreateVendedorsTable extends Migration
     {
         Schema::create('vendedors', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('nombre');
+            $table->string('apellidos');
+            $table->string('telefono');
+            $table->string('email')->unique();
+            $table->float('sueldo', 8, 2);
+            $table->string('foto')->default('/img/vendedores/default.jpg');
             $table->timestamps();
         });
     }

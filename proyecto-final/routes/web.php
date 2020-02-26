@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('inicio');
 // Route::get('/', "ArticuloController@index"); Esto hace que la ruta raiz llame al metodo index del controlador Articulo
 Route::resource('articulos', 'ArticuloController');
 Route::resource('categorias', 'CategoriaController');

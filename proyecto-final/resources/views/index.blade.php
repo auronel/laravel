@@ -7,7 +7,7 @@
 @endsection
 @section('contenido')
     <div class="container text-center mt-5">
-        <a href="{{route('articulos.index')}}" class="btn btn-success">Articulos</a>
+        <a href="{{route('articulos.index')}}" class="btn btn-success mr-2">Articulos</a>
         <a href="{{route('vendedores.index')}}" class="btn btn-success">Vendedores</a>
     </div>
 @endsection
