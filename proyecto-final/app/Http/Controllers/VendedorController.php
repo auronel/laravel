@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VendedorRequest;
 use App\Vendedor;
-use Illuminate\Http\Request;
 
 class VendedorController extends Controller
 {
@@ -25,7 +25,7 @@ class VendedorController extends Controller
      */
     public function create()
     {
-        //
+        return view('vendedores.create');
     }
 
     /**
@@ -34,9 +34,24 @@ class VendedorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(VendedorRequest $request)
     {
-        //
+        $datos = $request->validated();
+        $vendedor = new Vendedor();
+        $vendedor->nombre = $datos['nombre'];
+        $vendedor->apellidos = $datos['apellidos'];
+        $vendedor->telefono = $datos['telefono'];
+        $vendedor->email = $datos['email'];
+        $vendedor->sueldo = $datos['sueldo'];
+
+        if (isset($datos['foto']) && $datos['foto'] != null) {
+            $file = $datos['foto'];
+            $nom = 'vendedores/' . time() . '_' . $file->getClientOriginalName();
+            \Storage::disk('public')->put($nom, \File::get($file));
+            $vendedor->foto = "img/$nom";
+        }
+        $vendedor->save();
+        return redirect()->route('vendedores.index')->with('mensaje', 'Empleado añadido con éxito');
     }
 
     /**
@@ -45,9 +60,9 @@ class VendedorController extends Controller
      * @param  \App\Vendedor  $vendedor
      * @return \Illuminate\Http\Response
      */
-    public function show(Vendedor $vendedor)
+    public function show(Vendedor $vendedore)
     {
-        //
+        return view('vendedores.detalles', compact('vendedore'));
     }
 
     /**
@@ -56,9 +71,9 @@ class VendedorController extends Controller
      * @param  \App\Vendedor  $vendedor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Vendedor $vendedor)
+    public function edit(Vendedor $vendedore)
     {
-        //
+        return view('vendedores.edit', compact('vendedore'));
     }
 
     /**
@@ -68,9 +83,23 @@ class VendedorController extends Controller
      * @param  \App\Vendedor  $vendedor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vendedor $vendedor)
+    public function update(VendedorRequest $request, Vendedor $vendedore)
     {
-        //
+        $datos = $request->validated();
+        $vendedore->nombre = $datos['nombre'];
+        $vendedore->apellidos = $datos['apellidos'];
+        $vendedore->telefono = $datos['telefono'];
+        $vendedore->email = $datos['email'];
+        $vendedore->sueldo = $datos['sueldo'];
+
+        if (isset($datos['foto']) && $datos['foto'] != 'default.jpg') {
+            $file = $datos['foto'];
+            $nom = 'vendedores/' . time() . '_' . $file->getClientOriginalName();
+            \Storage::disk('public')->put($nom, \File::get($file));
+            $vendedore->foto = "img/$nom";
+        }
+        $vendedore->update();
+        return redirect()->route('vendedores.index')->with('mensaje', 'Empleado actualizado con éxito');
     }
 
     /**
@@ -79,8 +108,13 @@ class VendedorController extends Controller
      * @param  \App\Vendedor  $vendedor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vendedor $vendedor)
+    public function destroy(Vendedor $vendedore)
     {
-        //
+        $foto = $vendedore->foto;
+        if (basename($foto) != 'default.jpg') {
+            unlink($foto);
+        }
+        $vendedore->delete();
+        return redirect()->route('vendedores.index')->with('mensaje', 'Empleado eliminado con éxito');
     }
 }

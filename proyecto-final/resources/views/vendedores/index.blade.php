@@ -35,7 +35,7 @@
         <tbody>
             @foreach ($vendedores as $vendedor)
                 <tr>
-                    <td class="text-center align-middle"><a href="{{route('articulos.show',$vendedor)}}" class="text-white btn btn-secondary"><i class="far fa-eye fa-1x"></i></a></td>
+                    <td class="text-center align-middle"><a href="{{route('vendedores.show',$vendedor)}}" class="text-white btn btn-secondary"><i class="far fa-eye fa-1x"></i></a></td>
                     <td class="text-center align-middle">{{$vendedor->nombre}}</td>
                     <td class="text-center align-middle">{{$vendedor->apellidos}}</td>
                     <td class="text-center align-middle">{{$vendedor->telefono}}</td>

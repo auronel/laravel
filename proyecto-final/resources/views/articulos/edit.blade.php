@@ -16,7 +16,7 @@
         </div>
     @endif
     <div class="container mt-5">
-        <form  name="editar" action="{{route('articulos.update',$articulo)}}" method="post" enctype="multipart/form-data" class="justify-content-md-center">
+        <form  name="editar" action="{{route('articulos.update',$articulo)}}" method="post" enctype="multipart/form-data" class="justify-content-center">
             @csrf
             @method('PUT')
             <div class="row justify-content-center">

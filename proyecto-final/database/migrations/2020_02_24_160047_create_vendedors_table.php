@@ -17,7 +17,7 @@ class CreateVendedorsTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre');
             $table->string('apellidos');
-            $table->string('telefono');
+            $table->string('telefono')->unique();
             $table->string('email')->unique();
             $table->float('sueldo', 8, 2);
             $table->string('foto')->default('/img/vendedores/default.jpg');

@@ -48,7 +48,7 @@
             </div>
             <div class="row justify-content-center mt-1">
                 <div class="col-md-6">
-                    <i class="fas fa-image fa-2x mr-2"></i><input type="file" name="foto" accept="image/*">
+                    <i class="fas fa-image fa-2x mr-2 align-middle"></i><input type="file" name="foto" accept="image/*">
                 </div>
             </div>
             <div class="row justify-content-center mt-4">

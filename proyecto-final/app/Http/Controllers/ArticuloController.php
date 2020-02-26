@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Articulo;
 use App\Http\Requests\ArticuloRequest;
-use Illuminate\Http\Request;
 
 class ArticuloController extends Controller
 {
@@ -84,7 +83,7 @@ class ArticuloController extends Controller
      * @param  \App\Articulo  $articulo
      * @return \Illuminate\Http\Response
      */
-    public function update(CreateUpdateRequest $request, Articulo $articulo)
+    public function update(ArticuloRequest $request, Articulo $articulo)
     {
         $datos = $request->validated();
         $articulo->nombre = $datos['nombre'];
