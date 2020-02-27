@@ -20,7 +20,7 @@
             <p><label class="font-weight-bold mr-2">E-mail:</label>{{$vendedore->email}}</p>
             <p><label class="font-weight-bold mr-2">Sueldo:</label>{{$vendedore->sueldo}}</p>
         </div>
-        <a href="{{route('vendedores.index')}}" class="btn btn-primary">Volver</a>
+        <a href="{{route('vendedores.index')}}" class="btn btn-primary"><i class="fas fa-undo"></i></a>
         </div>
     </div>
 @endsection

@@ -53,7 +53,7 @@
             </div>
             <div class="row justify-content-center mt-4">
                 <div class="col-md-6">
-                    <button type="submit" class="btn btn-success mr-2"><i class="far fa-plus-square fa-1x"></i></button>
+                    <button type="submit" class="btn btn-success mr-2">Añadir</i></button>
                     <a href="{{route('vendedores.index')}}" class="btn btn-primary"><i class="fas fa-undo"></i></a>
                 </div>
             </div>

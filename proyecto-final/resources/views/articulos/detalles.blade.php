@@ -11,7 +11,7 @@
         <div class="card-body">
         <h5 class="card-title">{{$articulo->nombre.' '.$articulo->modelo}}</h5>
         <p class="card-text">{{$articulo->detalles}}</p>
-        <a href="{{route('articulos.index')}}" class="btn btn-primary">Volver</a>
+        <a href="{{route('articulos.index')}}" class="btn btn-primary"><i class="fas fa-undo"></i></a>
         </div>
     </div>
 @endsection

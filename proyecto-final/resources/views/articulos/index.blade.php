@@ -18,6 +18,16 @@
     @if ($text=Session::get('mensaje'))
         <p class="alert alert-success my-1">{{$text}}</p>
     @endif
+    <div>
+        <form action="filtro" method="post">
+            <select name="categorias" class="float-right mr-5">
+                <option value="%">Todos</option>
+                @foreach ($categorias as $categoria)
+                    <option value="{{$categoria->id}}" onchange="return this.form.submit()">{{$categoria->nombre}}</option>
+                @endforeach
+            </select>
+        </form>
+    </div>
     <a href="{{route('articulos.create')}}" class="btn btn-success ml-4 my-1"> <i class="far fa-plus-square fa-1x"></i></a>
     <table class="table table-borderless mt-5">
         <thead>
@@ -27,6 +37,7 @@
             <th scope="col" class="text-center">Modelo</th>
             <th scope="col" class="text-center">Precio</th>
             <th scope="col" class="text-center">Stock</th>
+            <th scope="col" class="text-center">Categoria</th>
             <th scope="col" class="text-center">Imagen</th>
             <th scope="col" class="text-center">Acciones</th>
         </tr>
@@ -39,6 +50,7 @@
                     <td class="text-center align-middle">{{$articulo->modelo}}</td>
                     <td class="text-center align-middle">{{$articulo->precio}}</td>
                     <td class="text-center align-middle">{{$articulo->stock}}</td>
+                    <td class="text-center align-middle">{{$articulo->categoria->nombre}}</td>
                     <td class="text-center align-middle"><img src="{{asset($articulo->foto)}}" width="90vw" height="90vh" class="img-fluid rounded-circle"></td>
                     <td class="text-center align-middle">
                         <form name="delete" action="{{route('articulos.destroy',$articulo)}}" method="post">

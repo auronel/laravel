@@ -21,6 +21,12 @@ class CreateArticulosTable extends Migration
             $table->integer('stock');
             $table->string('foto')->default('/img/articulos/default.png');
             $table->longText('detalles');
+            $table->bigInteger('categoria_id')->unsigned()->nullable();
+            $table->foreign('categoria_id')
+                ->references('id')
+                ->on('categorias')
+                ->onDelete('set null')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }

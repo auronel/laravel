@@ -2,6 +2,7 @@
 
 use App\Articulo;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ArticuloSeeder extends Seeder
 {
@@ -12,6 +13,10 @@ class ArticuloSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('articulos')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
         Articulo::create([
             'nombre' => 'Ratón',
             'modelo' => 'Razer Mamba elite',
@@ -30,7 +35,8 @@ class ArticuloSeeder extends Seeder
                             Tamaño aproximado: 125,0 mm/4,92" (largo) X 69,9 mm/2,75" (ancho) X 43,3 mm/1,70" (alto)
                             Peso aproximado (sin cable): 96 g/0,211 lbs
                             Longitud del cable: 2,1 m/6,89 ft
-                            Compatible con Xbox One para entrada básica'
+                            Compatible con Xbox One para entrada básica',
+            'categoria_id' => 1
         ]);
     }
 }

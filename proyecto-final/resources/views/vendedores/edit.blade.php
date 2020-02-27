@@ -52,7 +52,7 @@
             <div class="row justify-content-center mt-4">
                 <div class="col-md-6">
                     <input type="submit" value="Modificar" class="btn btn-success mr-2">
-                    <a href="{{route('vendedores.index')}}" class="btn btn-primary">Volver</a>
+                    <a href="{{route('vendedores.index')}}" class="btn btn-primary"><i class="fas fa-undo"></i></a>
                 </div>
             </div>
         </form>

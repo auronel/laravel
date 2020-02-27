@@ -23,6 +23,16 @@
             @csrf
             <div class="row justify-content-center">
                 <div class="col-md-6">
+                    <select name="categoria_id">
+                        <option value="%" selected>Sin categoria</option>
+                        @foreach ($categorias as $categoria)
+                            <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
                     <input type="text" class="form-control" name="nombre" placeholder="Nombre">
                 </div>
             </div>
@@ -53,7 +63,7 @@
             </div>
             <div class="row justify-content-center mt-4">
                 <div class="col-md-6">
-                    <button type="submit" class="btn btn-success mr-2"><i class="far fa-plus-square fa-1x"></i></button>
+                    <button type="submit" class="btn btn-success mr-2">Añadir</i></button>
                     <a href="{{route('articulos.index')}}" class="btn btn-primary"><i class="fas fa-undo"></i></a>
                 </div>
             </div>

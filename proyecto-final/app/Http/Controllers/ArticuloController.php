@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Articulo;
+use App\Categoria;
 use App\Http\Requests\ArticuloRequest;
 
 class ArticuloController extends Controller
@@ -14,8 +15,9 @@ class ArticuloController extends Controller
      */
     public function index()
     {
+        $categorias = Categoria::orderBy('nombre')->get();
         $articulos = Articulo::orderBy('id')->paginate(3);
-        return view('articulos.index', compact('articulos'));
+        return view('articulos.index', compact('articulos', 'categorias'));
     }
 
     /**
@@ -25,7 +27,8 @@ class ArticuloController extends Controller
      */
     public function create()
     {
-        return view('articulos.create');
+        $categorias = Categoria::orderBy('nombre')->get();
+        return view('articulos.create', compact('categorias'));
     }
 
     /**
@@ -43,6 +46,9 @@ class ArticuloController extends Controller
         $articulo->precio = $datos['precio'];
         $articulo->stock = $datos['stock'];
         $articulo->detalles = $datos['detalles'];
+        if($datos['categoria_id']!='%'){
+            $articulo->categoria_id=$datos['categoria_id'];
+        }
 
         if (isset($datos['foto']) && $datos['foto'] != null) {
             $file = $datos['foto'];
