@@ -19,11 +19,16 @@
         <p class="alert alert-success my-1">{{$text}}</p>
     @endif
     <div>
-        <form action="filtro" method="post">
-            <select name="categorias" class="float-right mr-5">
+        <form action="{{route('articulos.index')}}" method="get">
+            <select name="categoria_id" class="float-right mr-5" onchange="this.form.submit()">
                 <option value="%">Todos</option>
+                <option value="-1">Sin categoria</option>
                 @foreach ($categorias as $categoria)
-                    <option value="{{$categoria->id}}" onchange="return this.form.submit()">{{$categoria->nombre}}</option>
+                    @if ($categoria->id==$request->categoria_id)
+                        <option value="{{$categoria->id}}" selected>{{$categoria->nombre}}</option>
+                    @else
+                        <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                    @endif
                 @endforeach
             </select>
         </form>
@@ -64,7 +69,7 @@
         @endforeach
         </tbody>
     </table>
-    {{$articulos->links()}}
+    {{$articulos->appends(Request::except('page'))->links()}}
     <div class="text-center my-2">
         <a href="{{route('inicio')}}"><i class="btn fas fa-home fa-2x"></i></a>
     </div>

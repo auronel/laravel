@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Articulo;
 use App\Categoria;
 use App\Http\Requests\ArticuloRequest;
+use Illuminate\Http\Request;
 
 class ArticuloController extends Controller
 {
@@ -13,11 +14,14 @@ class ArticuloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $categorias = Categoria::orderBy('nombre')->get();
-        $articulos = Articulo::orderBy('id')->paginate(3);
-        return view('articulos.index', compact('articulos', 'categorias'));
+        $misCategorias = $request->get('categoria_id');
+        $articulos = Articulo::orderBy('id')
+            ->categoria_id($misCategorias)
+            ->paginate(3);
+        return view('articulos.index', compact('articulos', 'categorias', 'request'));
     }
 
     /**
@@ -46,8 +50,8 @@ class ArticuloController extends Controller
         $articulo->precio = $datos['precio'];
         $articulo->stock = $datos['stock'];
         $articulo->detalles = $datos['detalles'];
-        if($datos['categoria_id']!='%'){
-            $articulo->categoria_id=$datos['categoria_id'];
+        if ($datos['categoria_id'] != '%') {
+            $articulo->categoria_id = $datos['categoria_id'];
         }
 
         if (isset($datos['foto']) && $datos['foto'] != null) {
