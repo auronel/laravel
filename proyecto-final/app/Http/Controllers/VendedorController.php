@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Articulo;
 use App\Http\Requests\VendedorRequest;
 use App\Vendedor;
 
@@ -16,6 +17,12 @@ class VendedorController extends Controller
     {
         $vendedores = Vendedor::orderBy('id')->paginate(3);
         return view('vendedores.index', compact('vendedores'));
+    }
+
+    public function formVentas(Vendedor $vendedore)
+    {
+        $articulos = Articulo::orderBy('nombre')->get();
+        return view('vendedores.formVentas', compact('vendedore', 'articulos'));
     }
 
     /**

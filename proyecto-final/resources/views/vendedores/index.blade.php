@@ -18,7 +18,8 @@
     @if ($text=Session::get('mensaje'))
         <p class="alert alert-success my-1">{{$text}}</p>
     @endif
-    <a href="{{route('vendedores.create')}}" class="btn btn-success ml-4 my-1"> <i class="far fa-plus-square fa-1x"></i></a>
+    <a href="{{route('vendedores.create')}}" class="ml-4 my-1"> <i class="far fa-plus-square fa-1x btn btn-success"></i></a>
+    <a href="#" class="ml-3 my-1"><i class="fas fa-star fa-1x btn btn-dark mr-1"></i></a>Mejor vendedor
     <table class="table table-borderless mt-5">
         <thead>
         <tr>
@@ -46,7 +47,7 @@
                         <form name="delete" action="{{route('vendedores.destroy',$vendedor)}}" method="post">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Desea eliminar el trabajador?')"><i class="fas fa-trash-alt fa-1x"></i></button>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Desea eliminar al empleado?')"><i class="fas fa-trash-alt fa-1x"></i></button>
                             <a href="{{route('vendedores.edit',$vendedor)}}" class="btn btn-warning"><i class="far fa-edit fa-1x"></i></a>
                         </form>
                     </td>

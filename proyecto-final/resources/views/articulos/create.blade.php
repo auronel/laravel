@@ -24,7 +24,6 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <select name="categoria_id">
-                        <option value="%" selected>Sin categoria</option>
                         @foreach ($categorias as $categoria)
                             <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
                         @endforeach

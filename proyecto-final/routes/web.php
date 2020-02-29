@@ -16,7 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 })->name('inicio');
+
+Route::get('vendedores/{vendedore}/venta', 'VendedorController@formVentas')->name('vendedores.formVentas');
 // Route::get('/', "ArticuloController@index"); Esto hace que la ruta raiz llame al metodo index del controlador Articulo
 Route::resource('articulos', 'ArticuloController');
 Route::resource('categorias', 'CategoriaController');
 Route::resource('vendedores', 'VendedorController');
+
+Route::post('vendedor', 'VendedorController@venta')->name('vendedores.venta');

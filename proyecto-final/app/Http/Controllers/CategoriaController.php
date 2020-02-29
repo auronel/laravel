@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Categoria;
+use App\Http\Requests\CategoriaRequest;
 use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
@@ -14,7 +15,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        $categorias = Categoria::orderBy('id')->paginate(3);
+        return view('categorias.index', compact('categorias'));
     }
 
     /**
@@ -24,7 +26,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('categorias.create');
     }
 
     /**
@@ -33,9 +35,14 @@ class CategoriaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoriaRequest $request)
     {
-        //
+        $datos = $request->validated();
+        $categoria = new Categoria();
+        $categoria->nombre = $datos['nombre'];
+
+        $categoria->save();
+        return redirect()->route('categorias.index')->with('mensaje', 'Categoria añadida con éxito');
     }
 
     /**
@@ -57,7 +64,7 @@ class CategoriaController extends Controller
      */
     public function edit(Categoria $categoria)
     {
-        //
+        return view('categorias.edit', compact('categoria'));
     }
 
     /**
@@ -67,9 +74,13 @@ class CategoriaController extends Controller
      * @param  \App\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categoria $categoria)
+    public function update(CategoriaRequest $request, Categoria $categoria)
     {
-        //
+        $datos = $request->validated();
+        $categoria->nombre = $datos['nombre'];
+
+        $categoria->update();
+        return redirect()->route('categorias.index')->with('mensaje', 'Categoria actualizada con éxito');
     }
 
     /**
@@ -80,6 +91,7 @@ class CategoriaController extends Controller
      */
     public function destroy(Categoria $categoria)
     {
-        //
+        $categoria->delete();
+        return redirect()->route('categorias.index')->with('mensaje', 'Categoria eliminada con éxito');
     }
 }

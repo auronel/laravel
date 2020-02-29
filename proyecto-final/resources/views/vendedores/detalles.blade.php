@@ -20,6 +20,7 @@
             <p><label class="font-weight-bold mr-2">E-mail:</label>{{$vendedore->email}}</p>
             <p><label class="font-weight-bold mr-2">Sueldo:</label>{{$vendedore->sueldo}}</p>
         </div>
+        <a href="{{route('vendedores.formVentas',$vendedore)}}" class="mr-2 btn btn-warning"><i class="fas fa-cart-plus fa-1x"></i></a>
         <a href="{{route('vendedores.index')}}" class="btn btn-primary"><i class="fas fa-undo"></i></a>
         </div>
     </div>

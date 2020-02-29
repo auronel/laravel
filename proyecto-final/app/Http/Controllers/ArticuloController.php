@@ -50,9 +50,8 @@ class ArticuloController extends Controller
         $articulo->precio = $datos['precio'];
         $articulo->stock = $datos['stock'];
         $articulo->detalles = $datos['detalles'];
-        if ($datos['categoria_id'] != '%') {
-            $articulo->categoria_id = $datos['categoria_id'];
-        }
+        $articulo->categoria_id = $datos['categoria_id'];
+
 
         if (isset($datos['foto']) && $datos['foto'] != null) {
             $file = $datos['foto'];

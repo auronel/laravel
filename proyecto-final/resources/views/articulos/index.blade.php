@@ -22,7 +22,6 @@
         <form action="{{route('articulos.index')}}" method="get">
             <select name="categoria_id" class="float-right mr-5" onchange="this.form.submit()">
                 <option value="%">Todos</option>
-                <option value="-1">Sin categoria</option>
                 @foreach ($categorias as $categoria)
                     @if ($categoria->id==$request->categoria_id)
                         <option value="{{$categoria->id}}" selected>{{$categoria->nombre}}</option>
