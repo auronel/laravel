@@ -25,6 +25,11 @@ class VendedorController extends Controller
         return view('vendedores.formVentas', compact('vendedore', 'articulos'));
     }
 
+    public function venta()
+    {
+        # code...
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -40,7 +40,6 @@ class CategoriaController extends Controller
         $datos = $request->validated();
         $categoria = new Categoria();
         $categoria->nombre = $datos['nombre'];
-
         $categoria->save();
         return redirect()->route('categorias.index')->with('mensaje', 'Categoria añadida con éxito');
     }

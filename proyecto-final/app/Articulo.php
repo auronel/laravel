@@ -13,6 +13,11 @@ class Articulo extends Model
         return $this->belongsTo(Categoria::class);
     }
 
+    public function articulos()
+    {
+        return $this->belongsToMany('App\Vendedor')->withPivot('cantidad', 'fecha_venta')->withTimestamps();
+    }
+
     public function scopeCategoria_id($query, $v)
     {
 
