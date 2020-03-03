@@ -55,6 +55,7 @@
                     <a href="{{route('vendedores.index')}}" class="btn btn-primary"><i class="fas fa-undo"></i></a>
                 </div>
             </div>
+                <input type="hidden" value="{{$vendedore->id}}">
         </form>
     </div>
 @endsection

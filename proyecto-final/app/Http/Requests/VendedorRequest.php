@@ -27,8 +27,8 @@ class VendedorRequest extends FormRequest
         return [
             'nombre' => ['required'],
             'apellidos' => ['required'],
-            'telefono' => ['required', 'unique:vendedors,telefono'],
-            'email' => ['required', 'unique:vendedors,email'],
+            'telefono' => ['required', 'unique:vendedors,telefono,' . $request->vendedore->id],
+            'email' => ['required', 'unique:vendedors,email,' . $request->vendedore->id],
             'sueldo' => ['required'],
             'foto' => ['nullable', 'image']
         ];
